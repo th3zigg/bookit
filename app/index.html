@@ -61,47 +61,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
+
   <template is="dom-bind" id="app">
+    <paper-scroll-header-panel class="flex">
+      <paper-toolbar><div>{{headline}}</div></paper-toolbar>
+      <div class="layout horizontal center-center fit">
+      <form is="iron-form" id="form">
+        <paper-dropdown-menu label="Location">
+          <paper-menu class="dropdown-content">
+            <!-- <paper-item>New Cross Station</paper-item>
+            <paper-item>Deptford Bridge DLR</paper-item>
+            <paper-item>Deptford Market (former anchor)</paper-item>
+            <paper-item>St. John's Station</paper-item> -->
+            <template is="dom-repeat" items="[[locations]]" as="{{location}}">
+              <paper-item>{{location}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+        <div></div>
 
-  <paper-scroll-header-panel class="flex">
-    <paper-toolbar><div>Header Goes Here - 2</div></paper-toolbar>
-    <div class="layout horizontal center-center fit">
-    <form is="iron-form" id="form" method="post">
+        <paper-dropdown-menu label="Date">
+          <paper-menu name="{{date}}" class="dropdown-content">
+            <paper-item>Monday, 22 Sept</paper-item>
+            <paper-item>Tuesday, 23 Sept</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
 
-      <paper-dropdown-menu label="Location">
-        <paper-menu class="dropdown-content">
-          <paper-item>New Cross Station</paper-item>
-          <paper-item>Deptford Bridge DLR</paper-item>
-          <paper-item>Deptford Market (former anchor)</paper-item>
-          <paper-item>St. John's Station</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
-      <div></div>
+        <paper-dropdown-menu label="Time">
+          <paper-menu name="{{time}}" class="dropdown-content">
+            <paper-item>7AM - 9AM</paper-item>
+            <paper-item>9AM - 1PM</paper-item>
+            <paper-item>5PM - 7:30PM</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
 
-      <paper-dropdown-menu label="Date">
-        <paper-menu class="dropdown-content">
-          <paper-item>Monday, 22 Sept</paper-item>
-          <paper-item>Tuesday, 23 Sept</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
+        <paper-input name="{{name}}" label="Name"></paper-input>
 
-      <paper-dropdown-menu label="Time">
-        <paper-menu class="dropdown-content">
-          <paper-item>7AM - 9AM</paper-item>
-          <paper-item>9AM - 1PM</paper-item>
-          <paper-item>5PM - 7:30PM</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
+        <paper-input name="{{email}}" label="Email"></paper-input>
 
-      <paper-input label="Name"></paper-input>
-
-      <paper-input label="Email"></paper-input>
-
-      <paper-button raised>Submit</paper-button>
-    </form>
-    </div>
-
-  </paper-scroll-header-panel>
+        <paper-button name="Submit" raised>Submit</paper-button>
+      </form>
+      </div>
+    </paper-scroll-header-panel>
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
     <!--
     <paper-toast id="caching-complete"

@@ -14,7 +14,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
-
+  app.name='Joe Bloggs';
+  app.headline='Headline';
+  var locationsRef = new Firebase('https://pwsbooking.firebaseio.com/locations');
+  app.locations = [];
+  locationsRef.on('value', function(snapshot){
+    //console.log(snapshot.val());
+    app.locations = snapshot.val();
+    console.log(app.locations);
+  });
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled—it won't be in the dev environment.
     if (!document.querySelector('platinum-sw-cache').disabled) {
@@ -59,12 +67,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
-  app.onDataRouteClick = function() {
-    var drawerPanel = document.querySelector('#paperDrawerPanel');
-    if (drawerPanel.narrow) {
-      drawerPanel.closeDrawer();
-    }
-  };
+  // app.onDataRouteClick = function() {
+  //   var drawerPanel = document.querySelector('#paperDrawerPanel');
+  //   if (drawerPanel.narrow) {
+  //     drawerPanel.closeDrawer();
+  //   }
+  // };
 
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
