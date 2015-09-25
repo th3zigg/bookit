@@ -14,15 +14,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
-  app.name='Joe Bloggs';
+  app.myname='Joe Bloggs';
   app.headline='Headline';
   var locationsRef = new Firebase('https://pwsbooking.firebaseio.com/locations');
+  app.location = '';
   app.locations = [];
   locationsRef.on('value', function(snapshot){
     //console.log(snapshot.val());
     app.locations = snapshot.val();
-    console.log(app.locations);
+    //console.log(app.locations);
   });
+
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled—it won't be in the dev environment.
     if (!document.querySelector('platinum-sw-cache').disabled) {
@@ -35,6 +37,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
   });
+
+  app.addBooking = function() {
+    console.log('thanks for your submission');
+    var booking = {
+      name: '',
+      date: '',
+      time: '',
+      location: '',
+      email: ''
+    };
+    console.log(booking);
+  };
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
