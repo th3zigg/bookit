@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="layout horizontal center-center fit">
       <form is="iron-form" id="form">
         <paper-dropdown-menu label="Location">
-          <paper-menu class="dropdown-content">
+          <paper-menu class="dropdown-content" id="location">
             <!-- <paper-item>New Cross Station</paper-item>
             <paper-item>Deptford Bridge DLR</paper-item>
             <paper-item>Deptford Market (former anchor)</paper-item>
@@ -81,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div></div>
 
         <paper-dropdown-menu label="Date">
-          <paper-menu class="dropdown-content">
+          <paper-menu class="dropdown-content" id="date">
             <paper-item>Monday, 22 Sept</paper-item>
             <paper-item>Tuesday, 23 Sept</paper-item>
           </paper-menu>
@@ -97,10 +97,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <paper-input-container>
         <!-- <paper-input name="{{myname}}" label="Name"></paper-input> -->
-        <label>Your Name</label>
-        <input is="iron-input">
-<paper-icon-button suffix icon="clear"></paper-icon-button>
+          <label>Your Name</label>
+          <input is="iron-input" id="publishername">
+          <paper-icon-button suffix icon="clear"></paper-icon-button>
         </paper-input-container>
+
         <paper-input id="email" label="Email">{{email}}</paper-input>
 
 

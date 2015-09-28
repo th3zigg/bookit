@@ -16,13 +16,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   var app = document.querySelector('#app');
   app.myname='Joe Bloggs';
   app.headline='Headline';
-  var locationsRef = new Firebase('https://pwsbooking.firebaseio.com/locations');
+  app.var bookingid = '';
+  var dbref = new Firebase('https://pwsbooking.firebaseio.com');
   app.location = '';
   app.locations = [];
-  locationsRef.on('value', function(snapshot){
-    //console.log(snapshot.val());
+  dbref.child('locations').on('value', function(snapshot){
     app.locations = snapshot.val();
-    //console.log(app.locations);
   });
 
   app.displayInstalledToast = function() {
@@ -40,14 +39,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.addBooking = function() {
     console.log('thanks for your submission');
+
     var booking = {
-      name: '',
-      date: '',
-      time: '',
-      location: '',
-      email: ''
+      name: this.$.publishername.value,
+      date: this.$.date.selectedItem.textContent.trim(),
+      time: this.$.time.selectedItem.textContent.trim(),
+      location: this.$.location.selectedItem.textContent.trim(),
+      email: this.$.email.value,
+      approved: false
     };
-    console.log(booking);
+
+    var bookingid = dbref.child('bookings').push(booking, function(error) {
+        if (error) {
+          alert('there was an error');
+          console.error(error);
+        } else {
+          console.log('your data was saved with id: ' + bookingid);
+        }
+    });
   };
 
   // See https://github.com/Polymer/polymer/issues/1381
