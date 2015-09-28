@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit" />
-  <title>PW Shift Booking</title>
+  <title>Polymer Starter Kit</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="PW Shift Booking">
+  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
   <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
 
   <!-- Tile icon for Win8 (144x144) -->
@@ -61,54 +61,167 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
-
   <template is="dom-bind" id="app">
-    <paper-scroll-header-panel class="flex">
-      <paper-toolbar><div>{{headline}}</div></paper-toolbar>
-      <div class="layout horizontal center-center fit">
-      <form is="iron-form" id="form">
-        <paper-dropdown-menu label="Location">
-          <paper-menu class="dropdown-content" id="location">
-            <!-- <paper-item>New Cross Station</paper-item>
-            <paper-item>Deptford Bridge DLR</paper-item>
-            <paper-item>Deptford Market (former anchor)</paper-item>
-            <paper-item>St. John's Station</paper-item> -->
-            <template is="dom-repeat" items="{{locations}}">
-              <paper-item>{{item}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-        <div></div>
 
-        <paper-dropdown-menu label="Date">
-          <paper-menu class="dropdown-content" id="date">
-            <paper-item>Monday, 22 Sept</paper-item>
-            <paper-item>Tuesday, 23 Sept</paper-item>
-          </paper-menu>
-        </paper-dropdown-menu>
+    <paper-drawer-panel id="paperDrawerPanel">
+      <!-- Drawer Scroll Header Panel -->
+      <paper-scroll-header-panel drawer fixed>
 
-        <paper-dropdown-menu label="Time">
-          <paper-menu id="time" class="dropdown-content">
-            <paper-item>7AM - 9AM</paper-item>
-            <paper-item>9AM - 1PM</paper-item>
-            <paper-item>5PM - 7:30PM</paper-item>
-          </paper-menu>
-        </paper-dropdown-menu>
+        <!-- Drawer Toolbar -->
+        <paper-toolbar id="drawerToolbar">
+          <span class="paper-font-title">Menu</span>
+        </paper-toolbar>
 
-        <paper-input-container>
-        <!-- <paper-input name="{{myname}}" label="Name"></paper-input> -->
-          <label>Your Name</label>
-          <input is="iron-input" id="publishername">
-          <paper-icon-button suffix icon="clear"></paper-icon-button>
-        </paper-input-container>
+        <!-- Drawer Content -->
+        <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
+          <a data-route="home" href="/" on-click="onDataRouteClick">
+            <iron-icon icon="home"></iron-icon>
+            <span>Home</span>
+          </a>
 
-        <paper-input id="email" label="Email">{{email}}</paper-input>
+            <a data-route="book" href="/book" on-click="onDataRouteClick">
+            <iron-icon icon="add"></iron-icon>
+            <span>Book a shift</span>
+          </a>
+
+          <a data-route="booking-info" href="/booking-info/-K-JfSmo85KlDB9q2vMe" on-click="onDataRouteClick">
+            <iron-icon icon="search"></iron-icon>
+            <span>Search</span>
+          </a>
+        </paper-menu>
+      </paper-scroll-header-panel>
+
+      <!-- Main Area -->
+      <paper-scroll-header-panel main condenses keep-condensed-header>
+
+        <!-- Main Toolbar -->
+        <paper-toolbar id="mainToolbar" class="tall">
+          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+          <span class="flex"></span>
+
+          <!-- Toolbar icons -->
+          <paper-icon-button icon="refresh"></paper-icon-button>
+          <paper-icon-button icon="search"></paper-icon-button>
+
+          <!-- Application name -->
+          <div class="middle middle-container center horizontal layout">
+            <div class="app-name">{{headline}}</div>
+          </div>
+
+          <!-- Application sub title -->
+          <div class="bottom bottom-container center horizontal layout">
+            <div class="bottom-title paper-font-subhead">Strapline</div>
+          </div>
+
+        </paper-toolbar>
+
+        <!-- Main Content -->
+        <div class="content">
+          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+            <section data-route="home">
+              <paper-material elevation="1">
 
 
-        <paper-button name="Submit" on-click="addBooking" raised>Submit</paper-button>
-      </form>
-      </div>
-    </paper-scroll-header-panel>
+                <p class="paper-font-body2">Click on the menu to the left to view or add a booking.</p>
+              </paper-material>
+
+              <paper-material elevation="1" class="paper-font-body2">
+                Find a booking: <a href="/booking-info/-K-JfSmo85KlDB9q2vMe">Booking</a>
+              </paper-material>
+
+            </section>
+
+            <section data-route="book">
+              <paper-material elevation="1">
+                <form is="iron-form" id="form">
+                        <paper-dropdown-menu label="Location">
+                          <paper-menu class="dropdown-content" id="location">
+                            <!-- <paper-item>New Cross Station</paper-item>
+                            <paper-item>Deptford Bridge DLR</paper-item>
+                            <paper-item>Deptford Market (former anchor)</paper-item>
+                            <paper-item>St. John's Station</paper-item> -->
+                            <template is="dom-repeat" items="{{locations}}">
+                              <paper-item>{{item}}</paper-item>
+                            </template>
+                          </paper-menu>
+                        </paper-dropdown-menu>
+                        <div></div>
+
+                        <paper-dropdown-menu label="Date">
+                          <paper-menu class="dropdown-content" id="date">
+                            <paper-item>Monday, 22 Sept</paper-item>
+                            <paper-item>Tuesday, 23 Sept</paper-item>
+                          </paper-menu>
+                        </paper-dropdown-menu>
+
+                        <paper-dropdown-menu label="Time">
+                          <paper-menu id="time" class="dropdown-content">
+                            <paper-item>7AM - 9AM</paper-item>
+                            <paper-item>9AM - 1PM</paper-item>
+                            <paper-item>5PM - 7:30PM</paper-item>
+                          </paper-menu>
+                        </paper-dropdown-menu>
+
+                        <paper-input-container>
+                        <!-- <paper-input name="{{myname}}" label="Name"></paper-input> -->
+                          <label>Your Name</label>
+                          <input is="iron-input" id="publishername">
+                          <paper-icon-button suffix icon="clear"></paper-icon-button>
+                        </paper-input-container>
+
+                        <paper-input id="email" label="Email">{{email}}</paper-input>
+
+
+                        <paper-button name="Submit" on-click="addBooking" raised>Submit</paper-button>
+                      </form>
+              </paper-material>
+            </section>
+
+            <section data-route="booking-info">
+              <paper-material elevation="1">
+                <h2 class="page-title">
+                <!-- User:<span>{{params.name}}</span> -->
+                View your booking
+                </h2>
+                <div>
+                  Booking details here for: <span>{{params.bookingid}}</span>
+                  <firebase-document location="{{bookingurl}}" log="true" data="{{booking}}"></firebase-document>
+
+                  <div>
+                  <paper-icon-item>
+                    <iron-icon icon="room" item-icon></iron-icon>
+                    <span>{{booking.location}}</span>
+                  </paper-icon-item>
+                  </div>
+                  <div>
+                  <paper-icon-item>
+                    <iron-icon icon="hardware:watch" item-icon></iron-icon>
+                    <span>{{booking.date}}</span>, <span>{{booking.time}}</span>
+                  </paper-icon-item>
+                </div>
+                <div>
+                  <paper-icon-item>
+                    <iron-icon icon="social:person" item-icon></iron-icon>
+                    <span>{{booking.name}}</span>
+                  </paper-icon-item>
+                </div>
+                <div>
+                  <paper-icon-item>
+                    <iron-icon icon="communication:email" item-icon></iron-icon>
+                    <span>{{booking.email}}</span>
+                  </paper-icon-item>
+                  </div>
+                  </div>
+                </div>
+              </paper-material>
+            </section>
+
+          </iron-pages>
+        </div>
+      </paper-scroll-header-panel>
+    </paper-drawer-panel>
+
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
     <!--
     <paper-toast id="caching-complete"

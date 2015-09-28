@@ -15,9 +15,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
   app.myname='Joe Bloggs';
-  app.headline='Headline';
-  app.var bookingid = '';
-  var dbref = new Firebase('https://pwsbooking.firebaseio.com');
+  app.headline='PW Shift Booking';
+  app.bookingid = '';
+  app.firebaseurl = 'https://pwsbooking.firebaseio.com';
+  var dbref = new Firebase(app.firebaseurl);
   app.location = '';
   app.locations = [];
   dbref.child('locations').on('value', function(snapshot){
@@ -51,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     var bookingid = dbref.child('bookings').push(booking, function(error) {
         if (error) {
-          alert('there was an error');
+          console.error('there was an error');
           console.error(error);
         } else {
           console.log('your data was saved with id: ' + bookingid);
@@ -90,12 +91,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
-  // app.onDataRouteClick = function() {
-  //   var drawerPanel = document.querySelector('#paperDrawerPanel');
-  //   if (drawerPanel.narrow) {
-  //     drawerPanel.closeDrawer();
-  //   }
-  // };
+  app.onDataRouteClick = function() {
+    var drawerPanel = document.querySelector('#paperDrawerPanel');
+    if (drawerPanel.narrow) {
+      drawerPanel.closeDrawer();
+    }
+  };
 
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
