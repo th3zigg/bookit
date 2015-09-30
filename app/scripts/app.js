@@ -14,13 +14,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
-  app.myname='Joe Bloggs';
-  app.headline='PW Shift Booking';
-  app.bookingid = '';
+  app.headline='This is only a placeholder';
   app.firebaseurl = 'https://pwsbooking.firebaseio.com';
   var dbref = new Firebase(app.firebaseurl);
-  app.location = '';
-  app.locations = [];
+  //app.locations = [];
+  app.dateFormat = 'dddd, Do MMM';
+  app.dates = [
+    moment().format(app.dateFormat),
+    moment().add(1, 'd').format(app.dateFormat),
+    moment().add(2, 'd').format(app.dateFormat),
+    moment().add(3, 'd').format(app.dateFormat),
+    moment().add(4, 'd').format(app.dateFormat),
+    moment().add(5, 'd').format(app.dateFormat),
+    moment().add(6, 'd').format(app.dateFormat),
+    moment().add(7, 'd').format(app.dateFormat)
+  ];
+  app.times = ['7AM - 9AM','9AM - 1PM','3PM - 5PM','5PM - 7PM'];
   dbref.child('locations').on('value', function(snapshot){
     app.locations = snapshot.val();
   });
@@ -40,7 +49,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.addBooking = function() {
     console.log('thanks for your submission');
+    console.log(this.$.addform.date);
+    var booking = {
+      name: this.$.publishername.value,
+      date: this.$.date.selectedItem.textContent.trim(),
+      time: this.$.time.selectedItem.textContent.trim(),
+      location: this.$.location.selectedItem.textContent.trim(),
+      email: this.$.email.value,
+      approved: false,
+      dateAdded: new Date()
+    };
 
+    var fqn_bookingid = dbref.child('bookings').push(booking, function(error) {
+        if (error) {
+          console.error('there was an error');
+          console.error(error);
+        } else {
+          console.log('your data was saved with id: ' + fqn_bookingid);
+          var bookingid = fqn_bookingid.toString().substring((app.firebaseurl+'/bookings/').length);
+          page('booking-info/'+bookingid);
+          app.scrollPageToTop();
+        }
+    });
+  };
+
+  app.editBooking = function() {
+    console.log('bookingid: ' + this.$.bookingid.value);
+    if (!this.$.bookingid.value) {
+      console.error('could not find booking id');
+      return;
+    }
     var booking = {
       name: this.$.publishername.value,
       date: this.$.date.selectedItem.textContent.trim(),
@@ -50,14 +88,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       approved: false
     };
 
-    var bookingid = dbref.child('bookings').push(booking, function(error) {
+    dbref.child('bookings/'+this.$.bookingid.value).set(booking, function(error) {
         if (error) {
           console.error('there was an error');
           console.error(error);
         } else {
-          console.log('your data was saved with id: ' + bookingid);
+          console.log('your data was saved');
+          page('/');
+          app.scrollPageToTop();
         }
     });
+  };
+
+  app.getIndexOf = function(myArray, item) {
+    if (!myArray) {
+      return -1;
+    }
+    return myArray.indexOf(item);
   };
 
   // See https://github.com/Polymer/polymer/issues/1381
@@ -103,4 +150,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     document.getElementById('mainContainer').scrollTop = 0;
   };
 
+  app.isEditingBooking = function() {
+    console.log(app.route);
+    return app.route == 'edit';
+  };
 })(document);
