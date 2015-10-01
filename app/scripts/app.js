@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.addBooking = function() {
     console.log('thanks for your submission');
-    console.log(this.$.addform.date);
+    console.log(this.$.date);
     var booking = {
       name: this.$.publishername.value,
       date: this.$.date.selectedItem.textContent.trim(),
@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       location: this.$.location.selectedItem.textContent.trim(),
       email: this.$.email.value,
       approved: false,
-      dateAdded: new Date()
+      dateAdded: Date.now()
     };
 
     var fqn_bookingid = dbref.child('bookings').push(booking, function(error) {
@@ -67,34 +67,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else {
           console.log('your data was saved with id: ' + fqn_bookingid);
           var bookingid = fqn_bookingid.toString().substring((app.firebaseurl+'/bookings/').length);
-          page('booking-info/'+bookingid);
+          page('/booking-info/'+bookingid);
           app.scrollPageToTop();
         }
     });
   };
 
   app.editBooking = function() {
-    console.log('bookingid: ' + this.$.bookingid.value);
-    if (!this.$.bookingid.value) {
+    var bookingid = this.$.bookingid_edit ? this.$.bookingid_edit.value : '';
+    if (!bookingid) {
       console.error('could not find booking id');
       return;
     }
     var booking = {
-      name: this.$.publishername.value,
-      date: this.$.date.selectedItem.textContent.trim(),
-      time: this.$.time.selectedItem.textContent.trim(),
-      location: this.$.location.selectedItem.textContent.trim(),
-      email: this.$.email.value,
+      name: this.$.publishername_edit.value,
+      date: this.$.date_edit.selectedItem.textContent.trim(),
+      time: this.$.time_edit.selectedItem.textContent.trim(),
+      location: this.$.location_edit.selectedItem.textContent.trim(),
+      email: this.$.email_edit.value,
       approved: false
     };
 
-    dbref.child('bookings/'+this.$.bookingid.value).set(booking, function(error) {
+    dbref.child('bookings/' + bookingid).set(booking, function(error) {
         if (error) {
           console.error('there was an error');
           console.error(error);
         } else {
           console.log('your data was saved');
-          page('/');
+          page('/booking-info/'+bookingid);
           app.scrollPageToTop();
         }
     });
@@ -150,8 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     document.getElementById('mainContainer').scrollTop = 0;
   };
 
-  app.isEditingBooking = function() {
-    console.log(app.route);
-    return app.route == 'edit';
+  app.generateEditPath = function(bookingid) {
+    return '/edit/' + bookingid;
   };
 })(document);
