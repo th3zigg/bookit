@@ -134,93 +134,89 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="book">
-              is edit mode: <span>{{params.isEditMode}}</span>
-              <paper-material elevation="1">
-                <form is="iron-form" id="addform">
-                        <paper-dropdown-menu label="Location">
-                          <paper-menu class="dropdown-content" id="location">
-                            <!-- <paper-item>New Cross Station</paper-item>
-                            <paper-item>Deptford Bridge DLR</paper-item>
-                            <paper-item>Deptford Market (former anchor)</paper-item>
-                            <paper-item>St. John's Station</paper-item> -->
-                            <template is="dom-repeat" items="{{locations}}">
-                              <paper-item>{{item}}</paper-item>
-                            </template>
-                          </paper-menu>
-                        </paper-dropdown-menu>
-                        <div></div>
+              
+                <paper-material elevation="1">
+                  <form is="iron-form" id="addform">
+                    <paper-dropdown-menu label="Location">
+                      <paper-menu class="dropdown-content" id="location">
+                        <!-- <paper-item>New Cross Station</paper-item>
+                        <paper-item>Deptford Bridge DLR</paper-item>
+                        <paper-item>Deptford Market (former anchor)</paper-item>
+                        <paper-item>St. John's Station</paper-item> -->
+                        <template is="dom-repeat" items="{{locations}}">
+                          <paper-item>{{item}}</paper-item>
+                        </template>
+                      </paper-menu>
+                    </paper-dropdown-menu>
+                    <div></div>
 
-                        <paper-dropdown-menu label="Date">
-                          <paper-menu class="dropdown-content" id="date">
-                            <template is="dom-repeat" items="{{dates}}">
-                              <paper-item>{{item}}</paper-item>
-                            </template>
-                          </paper-menu>
-                        </paper-dropdown-menu>
+                    <paper-dropdown-menu label="Date">
+                      <paper-menu class="dropdown-content" id="date">
+                        <template is="dom-repeat" items="{{dates}}">
+                          <paper-item>{{item}}</paper-item>
+                        </template>
+                      </paper-menu>
+                    </paper-dropdown-menu>
 
-                        <paper-dropdown-menu label="Time">
-                          <paper-menu id="time" class="dropdown-content">
-                            <template is="dom-repeat" items="{{times}}">
-                              <paper-item>{{item}}</paper-item>
-                            </template>
-                          </paper-menu>
-                        </paper-dropdown-menu>
+                    <paper-dropdown-menu label="Time">
+                      <paper-menu id="time" class="dropdown-content">
+                        <template is="dom-repeat" items="{{times}}">
+                          <paper-item>{{item}}</paper-item>
+                        </template>
+                      </paper-menu>
+                    </paper-dropdown-menu>
 
-                        <paper-input id="publishername" label="Name"></paper-input>
+                    <paper-input id="publishername" label="Name"></paper-input>
 
-                        <paper-input id="email" label="Email"></paper-input>
+                    <paper-input id="email" label="Email"></paper-input>
 
-                        <paper-button name="Submit" on-click="addBooking" raised>Submit</paper-button>
-                      </form>
-              </paper-material>
+                    <paper-button name="Submit" on-click="addBooking" raised>Submit</paper-button>
+                  </form>
+                </paper-material>
+            
             </section>
 
             <section data-route="edit">
-              is edit mode: <span>{{isEditingBooking()}}</span>
-              <template is="dom-if" id="editform" if="{{isEditMode}}">
+              
               <firebase-document location="{{bookingurl}}" log="true" data="{{booking}}"></firebase-document>
               <paper-material elevation="1">
                 <div>
                   Edit for <span>{{booking.name}}</span>
                 </div>
                 <form is="iron-form" id="editform">
-                        <paper-dropdown-menu label="Location">
-                          <paper-menu class="dropdown-content" id="location" selected="{{getIndexOf(locations, booking.location)}}">
-                            <!-- <paper-item>New Cross Station</paper-item>
-                            <paper-item>Deptford Bridge DLR</paper-item>
-                            <paper-item>Deptford Market (former anchor)</paper-item>
-                            <paper-item>St. John's Station</paper-item> -->
-                            <template is="dom-repeat" items="{{locations}}">
-                              <paper-item>{{item}}</paper-item>
-                            </template>
-                          </paper-menu>
-                        </paper-dropdown-menu>
-                        <div></div>
+                  <paper-dropdown-menu label="Location">
+                    <paper-menu class="dropdown-content" id="location_edit" selected="{{getIndexOf(locations, booking.location)}}">
+                      <template is="dom-repeat" items="{{locations}}">
+                        <paper-item>{{item}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                  <div></div>
 
-                        <paper-dropdown-menu label="Date">
-                          <paper-menu class="dropdown-content" id="date">
-                            <template is="dom-repeat" items="{{dates}}">
-                              <paper-item>{{item}}</paper-item>
-                            </template>
-                          </paper-menu>
+                  <paper-dropdown-menu label="Date">
+                    <paper-menu class="dropdown-content" id="date_edit" selected="{{getIndexOf(dates, booking.date)}}">
+                      <template is="dom-repeat" items="{{dates}}">
+                        <paper-item>{{item}}</paper-item>
+                      </template>
+                    </paper-menu>
                         </paper-dropdown-menu>
 
-                        <paper-dropdown-menu label="Time">
-                          <paper-menu id="time" class="dropdown-content">
-                            <template is="dom-repeat" items="{{times}}">
-                              <paper-item>{{item}}</paper-item>
-                            </template>
-                          </paper-menu>
-                        </paper-dropdown-menu>
+                  <paper-dropdown-menu label="Time">
+                    <paper-menu id="time_edit" class="dropdown-content">
+                      <template is="dom-repeat" items="{{times}}">
+                        <paper-item>{{item}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
 
-                        <paper-input id="publishername" label="Name" value="{{booking.name}}"></paper-input>
+                  <paper-input id="publishername_edit" label="Name" value="{{booking.name}}"></paper-input>
 
-                        <paper-input id="email" label="Email" value="{{booking.email}}"></paper-input>
-                        <input type="hidden" id="bookingid" value="{{params.bookingid}}">
-                        <paper-button name="Submit" on-click="editBooking" raised>Submit</paper-button>
-                      </form>
+                  <paper-input id="email_edit" label="Email" value="{{booking.email}}"></paper-input>
+                  <input type="hidden" id="bookingid_edit" value="{{params.bookingid}}">
+                  <paper-button name="Submit" on-click="editBooking" raised>Submit</paper-button>
+                </form>
               </paper-material>
-            </template>
+            
             </section>
             <section data-route="booking-info">
               <paper-material elevation="1">
@@ -253,7 +249,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </paper-icon-item>
                   </div>
                 <div>
-                  <a href="/edit/-K-JfSmo85KlDB9q2vMe">Edit</a>
+                  <a href="{{generateEditPath(params.bookingid)}}">Edit</a>
                 </div>
                   </div>
                 </div>
