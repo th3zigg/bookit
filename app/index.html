@@ -178,14 +178,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="edit">
               
-              <firebase-document location="{{bookingurl}}" log="true" data="{{booking}}"></firebase-document>
+              <firebase-document location="{{bookingurl}}" log="true" data="[[booking]]"></firebase-document>
               <paper-material elevation="1">
                 <div>
                   Edit for <span>{{booking.name}}</span>
                 </div>
                 <form is="iron-form" id="editform">
                   <paper-dropdown-menu label="Location">
-                    <paper-menu class="dropdown-content" id="location_edit" selected="{{getIndexOf(locations, booking.location)}}">
+                    <paper-menu class="dropdown-content" id="location_edit" selected="[[getIndexOf(locations, booking.location)]]">
                       <template is="dom-repeat" items="{{locations}}">
                         <paper-item>{{item}}</paper-item>
                       </template>
@@ -194,7 +194,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <div></div>
 
                   <paper-dropdown-menu label="Date">
-                    <paper-menu class="dropdown-content" id="date_edit" selected="{{getIndexOf(dates, booking.date)}}">
+                    <paper-menu class="dropdown-content" id="date_edit" selected="[[getIndexOf(dates, booking.date)]]">
                       <template is="dom-repeat" items="{{dates}}">
                         <paper-item>{{item}}</paper-item>
                       </template>
@@ -202,16 +202,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-dropdown-menu>
 
                   <paper-dropdown-menu label="Time">
-                    <paper-menu id="time_edit" class="dropdown-content">
+                    <paper-menu id="time_edit" class="dropdown-content" selected="[[getIndexOf(times, booking.time)]]">
                       <template is="dom-repeat" items="{{times}}">
                         <paper-item>{{item}}</paper-item>
                       </template>
                     </paper-menu>
                   </paper-dropdown-menu>
 
-                  <paper-input id="publishername_edit" label="Name" value="{{booking.name}}"></paper-input>
+                  <paper-input id="publishername_edit" label="Name" value="[[booking.name]]"></paper-input>
 
-                  <paper-input id="email_edit" label="Email" value="{{booking.email}}"></paper-input>
+                  <paper-input id="email_edit" label="Email" value="[[booking.email]]"></paper-input>
                   <input type="hidden" id="bookingid_edit" value="{{params.bookingid}}">
                   <paper-button name="Submit" on-click="editBooking" raised>Submit</paper-button>
                 </form>
