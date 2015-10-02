@@ -107,6 +107,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     return myArray.indexOf(item);
   };
 
+  app.generateEditPath = function(bookingid) {
+    return '/edit/' + bookingid;
+  };
+
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
@@ -148,9 +152,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
     document.getElementById('mainContainer').scrollTop = 0;
-  };
-
-  app.generateEditPath = function(bookingid) {
-    return '/edit/' + bookingid;
   };
 })(document);
