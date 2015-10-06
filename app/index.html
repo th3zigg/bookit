@@ -132,9 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 
             </section>
-
             <section data-route="book">
-              
                 <paper-material elevation="1">
                   <form is="iron-form" id="addform">
                     <paper-dropdown-menu label="Location">
@@ -178,7 +176,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="edit">
               
-              <firebase-document location="{{bookingurl}}" log="true" data="[[booking]]"></firebase-document>
+              <firebase-document location="{{bookingurl}}" log="false" data="[[booking]]"></firebase-document>
               <paper-material elevation="1">
                 <div>
                   Edit for <span>{{booking.name}}</span>
@@ -194,7 +192,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <div></div>
 
                   <paper-dropdown-menu label="Date">
-                    <paper-menu class="dropdown-content" id="date_edit" selected="[[getIndexOf(dates, booking.date)]]">
+                    <paper-menu class="dropdown-content" id="date_edit" selected="[[getIndexOf(dates, formatDateForDisplay(booking.date)]]">
                       <template is="dom-repeat" items="{{dates}}">
                         <paper-item>{{item}}</paper-item>
                       </template>
@@ -219,10 +217,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             
             </section>
             <section data-route="booking-info">
-              <paper-material elevation="1">
+              <paper-material elevation="1" class="paper-font-body2">
                 <div>
                   Booking details here for: <span>{{params.bookingid}}</span>
-                  <firebase-document location="{{bookingurl}}" log="true" data="{{booking}}"></firebase-document>
+                  <firebase-document location="{{bookingurl}}" log="false" data="{{booking}}"></firebase-document>
 
                   <div>
                   <paper-icon-item>
@@ -256,6 +254,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
             </section>
 
+            <section data-route="bookings">
+                <div>You are in admin / bookings</div>
+                <firebase-collection location="{{bookingsUrl}}" data={{bookings}}></firebase-collection>
+                <template is="dom-repeat" items="[[bookings]]" as="booking">
+                  <paper-material elevation="1" class="paper-font-body2">
+                    <div><span>Name</span>: <span>{{booking.name}}</span></div>
+                    <div><span>Email</span>: <span>{{booking.email}}</span></div>
+                    <div><span>Location</span>: <span>{{booking.location}}</span></div>
+                    <div><span>Date/Time</span>: <span>[[formatDateForDisplay(booking.date)]]</span> <span>{{booking.time}}</span></div>
+                    <div><span>Approved?</span> <span>{{booking.approved}}</span></div>
+                  </paper-material>
+                </template>
+            </section>
           </iron-pages>
         </div>
       </paper-scroll-header-panel>

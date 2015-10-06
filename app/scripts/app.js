@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   var dbref = new Firebase(app.firebaseurl);
   //app.locations = [];
   app.dateFormat = 'dddd, Do MMM';
+  app.dateDigitFormat = 'YYYYMMDD';
   app.dates = [
     moment().format(app.dateFormat),
     moment().add(1, 'd').format(app.dateFormat),
@@ -52,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log(this.$.date);
     var booking = {
       name: this.$.publishername.value,
-      date: this.$.date.selectedItem.textContent.trim(),
+      date: app.formatDateAsNumber(this.$.date.selectedItem.textContent.trim()),
       time: this.$.time.selectedItem.textContent.trim(),
       location: this.$.location.selectedItem.textContent.trim(),
       email: this.$.email.value,
@@ -81,7 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     var booking = {
       name: this.$.publishername_edit.value,
-      date: this.$.date_edit.selectedItem.textContent.trim(),
+      date: app.formatDateAsNumber(this.$.date_edit.selectedItem.textContent.trim()),
       time: this.$.time_edit.selectedItem.textContent.trim(),
       location: this.$.location_edit.selectedItem.textContent.trim(),
       email: this.$.email_edit.value,
@@ -104,11 +105,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if (!myArray) {
       return -1;
     }
-    return myArray.indexOf(item);
+    var indexInArray = myArray.indexOf(item);
+    console.log('returning index in array: ' + indexInArray);
+    //return myArray.indexOf(item);
+    return indexInArray;
   };
 
   app.generateEditPath = function(bookingid) {
     return '/edit/' + bookingid;
+  };
+
+  app.formatDateForDisplay = function(dateAsNumber) {
+    console.log('received: ' + formatDateForDisplay);
+    var todayDateFormatted = moment(dateAsNumber, app.dateDigitFormat).format(app.dateFormat);
+    return todayDateFormatted;
+  };
+
+  app.formatDateAsNumber = function(dateStr) {
+    try {
+      var formattedDate = moment(dateStr, app.dateFormat).format(app.dateDigitFormat);
+      return Number(formattedDate);
+    } catch (e) {
+      console.log('there was an error formatting dates: ' + e.message);
+      console.error(e);
+    }
   };
 
   // See https://github.com/Polymer/polymer/issues/1381
