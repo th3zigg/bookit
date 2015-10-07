@@ -151,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <paper-dropdown-menu label="Date">
                       <paper-menu class="dropdown-content" id="date">
                         <template is="dom-repeat" items="{{dates}}">
-                          <paper-item>{{item}}</paper-item>
+                          <paper-item>{{formatDateForDisplay(item)}}</paper-item>
                         </template>
                       </paper-menu>
                     </paper-dropdown-menu>
@@ -192,9 +192,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <div></div>
 
                   <paper-dropdown-menu label="Date">
-                    <paper-menu class="dropdown-content" id="date_edit" selected="[[getIndexOf(dates, formatDateForDisplay(booking.date)]]">
+                    <paper-menu class="dropdown-content" id="date_edit" selected="[[getIndexOf(dates, booking.date)]]">
                       <template is="dom-repeat" items="{{dates}}">
-                        <paper-item>{{item}}</paper-item>
+                        <paper-item>{{formatDateForDisplay(item)}}</paper-item>
                       </template>
                     </paper-menu>
                         </paper-dropdown-menu>

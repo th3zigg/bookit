@@ -21,14 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.dateFormat = 'dddd, Do MMM';
   app.dateDigitFormat = 'YYYYMMDD';
   app.dates = [
-    moment().format(app.dateFormat),
-    moment().add(1, 'd').format(app.dateFormat),
-    moment().add(2, 'd').format(app.dateFormat),
-    moment().add(3, 'd').format(app.dateFormat),
-    moment().add(4, 'd').format(app.dateFormat),
-    moment().add(5, 'd').format(app.dateFormat),
-    moment().add(6, 'd').format(app.dateFormat),
-    moment().add(7, 'd').format(app.dateFormat)
+    Number(moment().format(app.dateDigitFormat)),
+    Number(moment().add(1, 'd').format(app.dateDigitFormat)),
+    Number(moment().add(2, 'd').format(app.dateDigitFormat)),
+    Number(moment().add(3, 'd').format(app.dateDigitFormat)),
+    Number(moment().add(4, 'd').format(app.dateDigitFormat)),
+    Number(moment().add(5, 'd').format(app.dateDigitFormat)),
+    Number(moment().add(6, 'd').format(app.dateDigitFormat)),
+    Number(moment().add(7, 'd').format(app.dateDigitFormat))
   ];
   app.times = ['7AM - 9AM','9AM - 1PM','3PM - 5PM','5PM - 7PM'];
   dbref.child('locations').on('value', function(snapshot){
@@ -103,8 +103,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.getIndexOf = function(myArray, item) {
     if (!myArray) {
+      console.log('no array or undefined array to get indexOf');
       return -1;
     }
+    console.log('looking for index of ' + item);
     var indexInArray = myArray.indexOf(item);
     console.log('returning index in array: ' + indexInArray);
     //return myArray.indexOf(item);
@@ -116,7 +118,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   app.formatDateForDisplay = function(dateAsNumber) {
-    console.log('received: ' + formatDateForDisplay);
     var todayDateFormatted = moment(dateAsNumber, app.dateDigitFormat).format(app.dateFormat);
     return todayDateFormatted;
   };
