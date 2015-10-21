@@ -166,16 +166,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <paper-input id="publishername" label="Name"></paper-input>
 
-                    <paper-input id="email" label="Email"></paper-input>
+                    <paper-input id="email" label="Email" pattern="[0-9]*" error-message="Please enter a valid" autoValidate="true"></paper-input>
+
 
                     <paper-button name="Submit" on-click="addBooking" raised>Submit</paper-button>
                   </form>
                 </paper-material>
-            
+
             </section>
 
             <section data-route="edit">
-              
+
               <firebase-document location="{{bookingurl}}" log="false" data="[[booking]]"></firebase-document>
               <paper-material elevation="1">
                 <div>
@@ -214,7 +215,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <paper-button name="Submit" on-click="editBooking" raised>Submit</paper-button>
                 </form>
               </paper-material>
-            
+
             </section>
             <section data-route="booking-info">
               <paper-material elevation="1" class="paper-font-body2">
@@ -255,17 +256,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="bookings">
-                <div>You are in admin / bookings</div>
-                <firebase-collection location="{{bookingsUrl}}" data={{bookings}}></firebase-collection>
-                <template is="dom-repeat" items="[[bookings]]" as="booking">
-                  <paper-material elevation="1" class="paper-font-body2">
-                    <div><span>Name</span>: <span>{{booking.name}}</span></div>
-                    <div><span>Email</span>: <span>{{booking.email}}</span></div>
-                    <div><span>Location</span>: <span>{{booking.location}}</span></div>
-                    <div><span>Date/Time</span>: <span>[[formatDateForDisplay(booking.date)]]</span> <span>{{booking.time}}</span></div>
-                    <div><span>Approved?</span> <span>{{booking.approved}}</span></div>
-                  </paper-material>
-                </template>
+
+              <firebase-collection location="{{bookingsUrl}}" data={{bookings}}></firebase-collection>
+              <template is="dom-repeat" items="[[bookings]]" as="booking">
+                <paper-material elevation="1" class="paper-font-body2">
+                  <div>
+                    <paper-icon-item>
+                      <iron-icon icon="icons:account-box" item-icon></iron-icon>
+                      <span>{{booking.name}}</span>
+                    </paper-icon-item>
+                  </div>
+                  <div>
+                    <paper-icon-item>
+                      <iron-icon icon="icons:mail" item-icon></iron-icon>
+                      <span>{{booking.email}}</span>
+                    </paper-icon-item>
+                  </div>
+                  <div>
+                    <paper-icon-item>
+                      <iron-icon icon="icons:room" item-icon></iron-icon>
+                      <span>{{booking.location}}</span>
+                    </paper-icon-item>
+                  </div>                  
+                  <div>
+                    <paper-icon-item>
+                      <iron-icon icon="icons:event" item-icon></iron-icon>
+                      <span>[[formatDateForDisplay(booking.date)]]</span>
+                    </paper-icon-item>
+                  </div>  
+                  <div>
+                    <paper-icon-item>
+                      <iron-icon icon="icons:schedule" item-icon></iron-icon>
+                      <span>{{booking.time}}</span>
+                    </paper-icon-item>
+                  </div> 
+
+                  <div>
+                    <paper-icon-button icon="star-border" active="true" ></paper-icon-button>
+                  </div>
+                </paper-material>
+              </template>
+
             </section>
           </iron-pages>
         </div>
