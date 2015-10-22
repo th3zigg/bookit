@@ -232,7 +232,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <div>
                   <paper-icon-item>
                     <iron-icon icon="hardware:watch" item-icon></iron-icon>
-                    <span>{{booking.date}}</span>, <span>{{booking.time}}</span>
+                    <span>{{formatDateForDisplay(booking.date)}}</span>, <span>{{booking.time}}</span>
                   </paper-icon-item>
                 </div>
                 <div>
@@ -277,22 +277,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <iron-icon icon="icons:room" item-icon></iron-icon>
                       <span>{{booking.location}}</span>
                     </paper-icon-item>
-                  </div>                  
+                  </div>
                   <div>
                     <paper-icon-item>
                       <iron-icon icon="icons:event" item-icon></iron-icon>
                       <span>[[formatDateForDisplay(booking.date)]]</span>
                     </paper-icon-item>
-                  </div>  
+                  </div>
                   <div>
                     <paper-icon-item>
                       <iron-icon icon="icons:schedule" item-icon></iron-icon>
                       <span>{{booking.time}}</span>
                     </paper-icon-item>
-                  </div> 
+                  </div>
 
                   <div>
-                    <paper-icon-button icon="star-border" active="true" ></paper-icon-button>
+                    <paper-icon-button icon="star-border" active="true" on-tap="toggleBookingApproval"></paper-icon-button>
                   </div>
                 </paper-material>
               </template>
@@ -302,6 +302,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </paper-scroll-header-panel>
     </paper-drawer-panel>
+
+    <paper-toast id="booking-toast"
+                 duration="6000"
+                 text="">
+    </paper-toast>
+
+    <paper-toast id="booking-not-saved"
+                 duration="4000"
+                 text="There was an error submitting your booking. Please try again.">
+    </paper-toast>
 
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
     <!--

@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.addBooking = function() {
     console.log('thanks for your submission');
-    console.log(this.$.date);
+    //console.log(this.$.date);
     var booking = {
       name: this.$.publishername.value,
       date: app.formatDateAsNumber(this.$.date.selectedItem.textContent.trim()),
@@ -64,9 +64,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var fqn_bookingid = dbref.child('bookings').push(booking, function(error) {
         if (error) {
           console.error('there was an error');
-          console.error(error);
+          console.log(error);
+          app.showBookingToastMessage('There was an error submitting your booking.  Please try again.');
         } else {
           console.log('your data was saved with id: ' + fqn_bookingid);
+          try {
+            app.showBookingToastMessage('Your booking has been submitted.');
+          } catch (e) {
+            console.log(e);
+          }
           var bookingid = fqn_bookingid.toString().substring((app.firebaseurl+'/bookings/').length);
           page('/booking-info/'+bookingid);
           app.scrollPageToTop();
@@ -77,7 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.editBooking = function() {
     var bookingid = this.$.bookingid_edit ? this.$.bookingid_edit.value : '';
     if (!bookingid) {
-      console.error('could not find booking id');
+      console.log('no booking id found');
+      app.showBookingToastMessage('There was a problem retrieving your booking.  Please try again.');
       return;
     }
     var booking = {
@@ -92,13 +99,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     dbref.child('bookings/' + bookingid).set(booking, function(error) {
         if (error) {
           console.error('there was an error');
-          console.error(error);
+          console.log(error);
+          app.showBookingToastMessage('There was a problem submitting your update.');
         } else {
           console.log('your data was saved');
+          app.showBookingToastMessage('Your booking update has been submitted.');
           page('/booking-info/'+bookingid);
           app.scrollPageToTop();
         }
     });
+  };
+
+  app.toggleBookingApproval = function(event) {
+    //console.log('toogle approval');
+    //console.log(event);
+    if (event.target.icon) {
+      var icon = event.target.icon;
+      event.target.icon = icon === 'star' ? 'star-border' : 'star';
+    }
   };
 
   app.getIndexOf = function(myArray, item) {
@@ -132,6 +150,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+  app.showBookingToastMessage = function(message) {
+    this.$['booking-toast'].text = message;
+    this.$['booking-toast'].show();
+  };
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
