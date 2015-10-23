@@ -80,8 +80,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   };
 
-  app.editBooking = function() {
-    var bookingid = this.$.bookingid_edit ? this.$.bookingid_edit.value : '';
+  app.editBooking = function(input) {
+    var bookingid = document.querySelector('#bookingid_edit') ? document.querySelector('#bookingid_edit').value : '';
     if (!bookingid) {
       console.log('no booking id found');
       app.showBookingToastMessage('There was a problem retrieving your booking.  Please try again.');
@@ -154,6 +154,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.$['booking-toast'].text = message;
     this.$['booking-toast'].show();
   };
+
+  app.getMailToLink = function(email) {
+    return 'mailto:'+email;
+  };
+
+  app.isAdminRoute = function(route) {
+    console.log('route is: ' + route);
+    return route ? route.search('^admin') != -1 : false;
+  };
+
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered

@@ -132,6 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 
             </section>
+            <template id="userSection" is="dom-if" if="{{!isAdminRoute(route)}}">
             <section data-route="book">
                 <paper-material elevation="1">
                   <form is="iron-form" id="addform">
@@ -254,8 +255,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
               </paper-material>
             </section>
-
-            <section data-route="bookings">
+            </template>
+            <template id="adminSection" is="dom-if" if="{{isAdminRoute(route)}}">
+            <section data-route="admin/bookings">
 
               <firebase-collection location="{{bookingsUrl}}" data={{bookings}}></firebase-collection>
               <template is="dom-repeat" items="[[bookings]]" as="booking">
@@ -269,7 +271,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <div>
                     <paper-icon-item>
                       <iron-icon icon="icons:mail" item-icon></iron-icon>
-                      <span>{{booking.email}}</span>
+                      <span><a href="{{getMailToLink(booking.email)}}">{{booking.email}}</a></span>
                     </paper-icon-item>
                   </div>
                   <div>
@@ -298,6 +300,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </template>
 
             </section>
+            </template>
           </iron-pages>
         </div>
       </paper-scroll-header-panel>
