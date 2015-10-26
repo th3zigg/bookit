@@ -52,11 +52,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('thanks for your submission');
     //console.log(this.$.date);
     var booking = {
-      name: this.$.publishername.value,
-      date: app.formatDateAsNumber(this.$.date.selectedItem.textContent.trim()),
-      time: this.$.time.selectedItem.textContent.trim(),
-      location: this.$.location.selectedItem.textContent.trim(),
-      email: this.$.email.value,
+      name: document.querySelector('#publishername').value,
+      date: app.formatDateAsNumber(document.querySelector('#date').selectedItem.textContent.trim()),
+      time: document.querySelector('#time').selectedItem.textContent.trim(),
+      location: document.querySelector('#location').selectedItem.textContent.trim(),
+      email: document.querySelector('#email').value,
       approved: false,
       dateAdded: Date.now()
     };
@@ -88,19 +88,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return;
     }
     var booking = {
-      name: this.$.publishername_edit.value,
-      date: app.formatDateAsNumber(this.$.date_edit.selectedItem.textContent.trim()),
-      time: this.$.time_edit.selectedItem.textContent.trim(),
-      location: this.$.location_edit.selectedItem.textContent.trim(),
-      email: this.$.email_edit.value,
+      name: document.querySelector('#publishername_edit').value,
+      date: app.formatDateAsNumber(document.querySelector('#date_edit').selectedItem.textContent.trim()),
+      time: document.querySelector('#time_edit').selectedItem.textContent.trim(),
+      location: document.querySelector('#location_edit').selectedItem.textContent.trim(),
+      email: document.querySelector('#email_edit').value,
       approved: false
     };
+    console.log(booking);
 
     dbref.child('bookings/' + bookingid).set(booking, function(error) {
         if (error) {
           console.error('there was an error');
           console.log(error);
-          app.showBookingToastMessage('There was a problem submitting your update.');
+          app.showBookingToastMessage('There was a problem submitting your update. Please try again');
         } else {
           console.log('your data was saved');
           app.showBookingToastMessage('Your booking update has been submitted.');
