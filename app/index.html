@@ -9,7 +9,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<html lang="">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -89,6 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="search"></iron-icon>
             <span>Search</span>
           </a>
+
+          <a data-route="admin/bookings" href="/admin/bookings" on-click="onDataRouteClick">
+            <iron-icon icon="assignment-ind"></iron-icon>
+            <span>Bookings</span>
+          </a>          
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -101,8 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+          <!-- <paper-icon-button icon="refresh"></paper-icon-button>
+          <paper-icon-button icon="search"></paper-icon-button> -->
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
@@ -222,7 +227,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-material elevation="1" class="paper-font-body2">
                 <div>
                   Booking details here for: <span>{{params.bookingid}}</span>
-                  <firebase-document location="{{bookingurl}}" log="false" data="{{booking}}"></firebase-document>
+                  <firebase-document location="{{bookingurl}}" log="true" data="{{booking}}"></firebase-document>
 
                   <div>
                   <paper-icon-item>
@@ -259,7 +264,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template id="adminSection" is="dom-if" if="{{isAdminRoute(route)}}">
             <section data-route="admin/bookings">
 
-              <firebase-collection location="{{bookingsUrl}}" data={{bookings}}></firebase-collection>
+              <firebase-collection location="{{bookingsUrl}}" data={{bookings}} log="true"></firebase-collection>
               <template is="dom-repeat" items="[[bookings]]" as="booking">
                 <paper-material elevation="1" class="paper-font-body2">
                   <div>
@@ -292,13 +297,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <span>{{booking.time}}</span>
                     </paper-icon-item>
                   </div>
-
-                  <div>
-                    <paper-icon-button icon="star-border" active="true" on-tap="toggleBookingApproval"></paper-icon-button>
-                  </div>
+                  <template is="dom-if" if="{{booking.approved}}">
+                    <paper-icon-button icon="star" on-tap="toggleBookingApproval"></paper-icon-button>
+                  </template>
+                  <template is="dom-if" if="{{!booking.approved}}">
+                    <paper-icon-button icon="star-border" on-tap="toggleBookingApproval"></paper-icon-button>
+                  </template>                  
                 </paper-material>
               </template>
-
             </section>
             </template>
           </iron-pages>
