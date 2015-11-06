@@ -263,7 +263,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
             <template id="adminSection" is="dom-if" if="{{isAdminRoute(route)}}">
             <section data-route="admin/bookings">
-
+              <script type="text/javascript">
+              console.log(app.$.firebaseLogin.params);
+              console.log(app.$.firebaseLogin.login(app.$.firebaseLogin.params));
+              </script>
               <firebase-collection location="{{bookingsUrl}}" data={{bookings}} log="true"></firebase-collection>
               <template is="dom-repeat" items="[[bookings]]" as="booking">
                 <paper-material elevation="1" class="paper-font-body2">
@@ -321,6 +324,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  duration="4000"
                  text="There was an error submitting your booking. Please try again.">
     </paper-toast>
+
+    <paper-toast id="auth-error"
+                 duration="4000"
+                 text="There was an error authenticating.  Please try again">
+    </paper-toast>
+
+    <firebase-auth id="firebaseLogin" user="{{user}}" provider="custom" location="{{bookingsUrl}}" params="{{params}}" on-error="authErrorHandler"></firebase-auth>
 
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
     <!--

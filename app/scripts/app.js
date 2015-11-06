@@ -113,7 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.toggleBookingApproval = function(event) {
     //console.log('toogle approval');
-    //console.log(event);
+    //console.log(event.target);
     if (event.target.icon) {
       var icon = event.target.icon;
       event.target.icon = icon === 'star' ? 'star-border' : 'star';
@@ -156,12 +156,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.$['booking-toast'].show();
   };
 
+  app.authErrorHandler = function() {
+    this.$['auth-error'].show();
+  };
+
   app.getMailToLink = function(email) {
     return 'mailto:'+email;
   };
 
   app.isAdminRoute = function(route) {
-    console.log('route is: ' + route);
     return route ? route.search('^admin') != -1 : false;
   };
 
