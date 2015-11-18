@@ -227,7 +227,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-material elevation="1" class="paper-font-body2">
                 <div>
                   Booking details here for: <span>{{params.bookingid}}</span>
-                  <firebase-document location="{{bookingurl}}" log="true" data="{{booking}}"></firebase-document>
+                  <firebase-document location="{{bookingurl}}" log="false" data="{{booking}}"></firebase-document>
 
                   <div>
                   <paper-icon-item>
@@ -264,11 +264,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template id="adminSection" is="dom-if" if="{{isAdminRoute(route)}}">
             <section data-route="admin/bookings">
               <script type="text/javascript">
-              console.log(app.$.firebaseLogin.params);
-              console.log(app.$.firebaseLogin.login(app.$.firebaseLogin.params));
+                app.$.firebaseLogin.login(app.$.firebaseLogin.params);
               </script>
-              <firebase-collection location="{{bookingsUrl}}" data={{bookings}} log="true"></firebase-collection>
-              <template is="dom-repeat" items="[[bookings]]" as="booking">
+              <firebase-collection location="{{bookingsUrl}}" data={{bookings}} log="false"></firebase-collection>
+              <template is="dom-repeat" items="{{bookings}}" as="booking">
                 <paper-material elevation="1" class="paper-font-body2">
                   <div>
                     <paper-icon-item>
@@ -301,10 +300,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </paper-icon-item>
                   </div>
                   <template is="dom-if" if="{{booking.approved}}">
-                    <paper-icon-button icon="star" on-tap="toggleBookingApproval"></paper-icon-button>
+                    <booking-approval-button icon="star" approved="{{booking.approved}}"></booking-approval-button>
                   </template>
                   <template is="dom-if" if="{{!booking.approved}}">
-                    <paper-icon-button icon="star-border" on-tap="toggleBookingApproval"></paper-icon-button>
+                    <booking-approval-button icon="star-border" approved="{{booking.approved}}"></booking-approval-button>
                   </template>                  
                 </paper-material>
               </template>
