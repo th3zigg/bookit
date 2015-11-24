@@ -96,6 +96,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       approved: false
     };
     console.log(booking);
+    if (!app.isBookingEditableOrCancellable(booking)) {
+      app.showBookingToastMessage('This booking cannot now be changed');
+      return;
+    }
 
     dbref.child('bookings/' + bookingid).set(booking, function(error) {
         if (error) {
@@ -109,6 +113,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           app.scrollPageToTop();
         }
     });
+  };
+
+  app.isBookingEditableOrCancellable = function(booking) {
+    var now = moment();
+    try {
+      var startTime = booking.time.split(" - ")[0];
+      var bookingDateNum = Number(booking.date+'0000') + Number(moment(startTime, 'ha').format('HHmm'));
+      //console.log('booking date: ' + bookingDateNum);
+      var threeHrsFromNowNum = Number(now.add(3, 'h').format('YYYYMMDDHHmm'));
+      //console.log('3 hours from now:' + threeHrsFromNowNum);
+
+      return bookingDateNum >= threeHrsFromNowNum;
+  
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   app.toggleBookingApproval = function(event) {

@@ -254,7 +254,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </paper-icon-item>
                   </div>
                 <div>
-                  <a href="{{generateEditPath(params.bookingid)}}">Edit</a>
+                  <template is="dom-if" if="{{isBookingEditableOrCancellable(booking)}}">
+                    <a href="{{generateEditPath(params.bookingid)}}">Edit</a>
+                  </template>
                 </div>
                   </div>
                 </div>
