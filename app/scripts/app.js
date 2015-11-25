@@ -115,6 +115,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   };
 
+  app.deleteBooking = function(bookingid) {    
+    var onComplete = function(error) {
+      if (error) {
+        app.showBookingToastMessage('There was a problem deleting the booking.  Please try again later');
+        console.log(error);
+      } else {
+        page('/');
+        app.showBookingToastMessage('Your booking has been deleted');
+        console.log('successfully deleted the booking');
+      }
+    };
+    var bookingRef = dbref.child('bookings/' + bookingid);
+    bookingRef.remove(onComplete);
+  };
+
   app.isBookingEditableOrCancellable = function(booking) {
     var now = moment();
     try {

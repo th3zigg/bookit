@@ -255,7 +255,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </div>
                 <div>
                   <template is="dom-if" if="{{isBookingEditableOrCancellable(booking)}}">
-                    <a href="{{generateEditPath(params.bookingid)}}">Edit</a>
+                      <a href="{{generateEditPath(params.bookingid)}}"><iron-icon icon="editor:mode-edit" item-icon></iron-icon></a>
+                    | <my-delete-booking-button bookingid="[[params.bookingid]]"></my-delete-booking-button>
                   </template>
                 </div>
                   </div>
