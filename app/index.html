@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit" />
-  <title>Polymer Starter Kit</title>
+  <title>PWS Booking</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+  <meta name="apple-mobile-web-app-title" content="PWS Booking">
   <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
 
   <!-- Tile icon for Win8 (144x144) -->
@@ -143,10 +143,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <form is="iron-form" id="addform">
                     <paper-dropdown-menu label="Location">
                       <paper-menu class="dropdown-content" id="location">
-                        <!-- <paper-item>New Cross Station</paper-item>
-                        <paper-item>Deptford Bridge DLR</paper-item>
-                        <paper-item>Deptford Market (former anchor)</paper-item>
-                        <paper-item>St. John's Station</paper-item> -->
                         <template is="dom-repeat" items="{{locations}}">
                           <paper-item>{{item}}</paper-item>
                         </template>
@@ -182,8 +178,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="edit">
-
-              <firebase-document location="{{bookingurl}}" log="false" data="[[booking]]"></firebase-document>
+              <firebase-document location="{{bookingurl}}" data="[[booking]]"></firebase-document>
               <paper-material elevation="1">
                 <div>
                   Edit for <span>{{booking.name}}</span>
@@ -224,18 +219,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             </section>
             <section data-route="booking-info">
+              <firebase-document location="{{bookingurl}}" log="false" data="{{booking}}"></firebase-document>
               <paper-material elevation="1" class="paper-font-body2">
+              <template is="dom-if" if="{{!booking}}">
+                <div>Sorry, could not find your booking.</div>
+              </template>
+              <template is="dom-if" if="{{booking}}">
                 <div>
-                  Booking details here for: <span>{{params.bookingid}}</span>
-                  <firebase-document location="{{bookingurl}}" log="false" data="{{booking}}"></firebase-document>
-
-                  <div>
                   <paper-icon-item>
                     <iron-icon icon="room" item-icon></iron-icon>
                     <span>{{booking.location}}</span>
                   </paper-icon-item>
-                  </div>
-                  <div>
+                </div>
+                <div>
                   <paper-icon-item>
                     <iron-icon icon="hardware:watch" item-icon></iron-icon>
                     <span>{{formatDateForDisplay(booking.date)}}</span>, <span>{{booking.time}}</span>
@@ -252,15 +248,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <iron-icon icon="communication:email" item-icon></iron-icon>
                     <span>{{booking.email}}</span>
                   </paper-icon-item>
-                  </div>
+                </div>
                 <div>
                   <template is="dom-if" if="{{isBookingEditableOrCancellable(booking)}}">
                       <a href="{{generateEditPath(params.bookingid)}}"><iron-icon icon="editor:mode-edit" item-icon></iron-icon></a>
                     | <my-delete-booking-button bookingid="[[params.bookingid]]"></my-delete-booking-button>
                   </template>
                 </div>
-                  </div>
-                </div>
+              </template>
               </paper-material>
             </section>
             </template>
@@ -269,9 +264,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <script type="text/javascript">
                 app.$.firebaseLogin.login(app.$.firebaseLogin.params);
               </script>
-              <firebase-collection location="{{bookingsUrl}}" data={{bookings}} log="false"></firebase-collection>
+              <firebase-collection order-by-child="date" location="{{bookingsUrl}}" data={{bookings}}></firebase-collection>
               <template is="dom-repeat" items="{{bookings}}" as="booking">
-                <paper-material elevation="1" class="paper-font-body2">
+                <paper-material elevation="1" class="paper-font-body2" >
                   <div>
                     <paper-icon-item>
                       <iron-icon icon="icons:account-box" item-icon></iron-icon>
