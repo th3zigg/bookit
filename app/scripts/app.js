@@ -48,6 +48,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('Our app is ready to rock!');
   });
 
+  app.login = function(username, password) {
+    if (!username || !password) {
+      app.showBookingToastMessage('Please enter a username and password');
+      return;
+    }
+
+    dbref.authWithPassword({
+      email: username,
+      password: password
+    }, function(error, authData) {
+      if (error) {
+        console.log(error);
+        app.showBookingToastMessage('There was a problem with login. Please try again');
+      } else {        
+        page('/');
+      }
+    }, {
+      remember: "sessionOnly"
+    });
+  };
+
+  app.isUserLoggedin = function() {
+    console.log('checking if user is logged in');
+    var userSession = sessionStorage.getItem('firebase:session::pwsbooking');
+    if (userSession) {
+      try {
+        var authData = JSON.parse(userSession);
+        if (authData && authData.token) {
+          console.log('looks like user is logged in');
+          return true;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    
+    return false;
+  };
+
+  app.getUserTokenFromSession = function() {
+    var userSession = sessionStorage.getItem('firebase:session::pwsbooking');
+    if (userSession) {
+      try {
+        var authData = JSON.parse(userSession);
+        if (authData && authData.token) {
+          return authData.token;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }    
+  };
+
   app.addBooking = function() {
     console.log('thanks for your submission');
     //console.log(this.$.date);
@@ -67,12 +120,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log(error);
           app.showBookingToastMessage('There was an error submitting your booking.  Please try again.');
         } else {
-          console.log('your data was saved with id: ' + fqn_bookingid);
-          try {
-            app.showBookingToastMessage('Your booking has been submitted.');
-          } catch (e) {
-            console.log(e);
-          }
+          //console.log('your data was saved with id: ' + fqn_bookingid);
+          app.showBookingToastMessage('Your booking has been submitted.');
           var bookingid = fqn_bookingid.toString().substring((app.firebaseurl+'/bookings/').length);
           page('/booking-info/'+bookingid);
           app.scrollPageToTop();

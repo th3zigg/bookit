@@ -15,7 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit" />
+  <meta name="generator" content="PWS Booking" />
   <title>PWS Booking</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
@@ -124,20 +124,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- Main Content -->
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
+            <template id="loginSection" is="dom-if" if="{{!isUserLoggedin()}}">
+              <section data-route="login">
+                <paper-material elevation="1">
+                  <my-login-form username="" password=""></my-login-form>  
+                </paper-material>
+              </section>
+            </template>
 
+            <template id="userSection" is="dom-if" if="{{!isAdminRoute(route)}}">
             <section data-route="home">
               <paper-material elevation="1">
-
-
                 <p class="paper-font-body2">Click on the menu to the left to view or add a booking.</p>
               </paper-material>
 
               <paper-material elevation="1" class="paper-font-body2">
                 Find a booking: <a href="/booking-info/-K-JfSmo85KlDB9q2vMe">Booking</a>
               </paper-material>
-
             </section>
-            <template id="userSection" is="dom-if" if="{{!isAdminRoute(route)}}">
+
             <section data-route="book">
                 <paper-material elevation="1">
                   <form is="iron-form" id="addform">
@@ -174,7 +179,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <paper-button name="Submit" on-click="addBooking" raised>Submit</paper-button>
                   </form>
                 </paper-material>
-
             </section>
 
             <section data-route="edit">
@@ -199,7 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-item>{{formatDateForDisplay(item)}}</paper-item>
                       </template>
                     </paper-menu>
-                        </paper-dropdown-menu>
+                  </paper-dropdown-menu>
 
                   <paper-dropdown-menu label="Time">
                     <paper-menu id="time_edit" class="dropdown-content" selected="[[getIndexOf(times, booking.time)]]">
@@ -216,10 +220,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <paper-button name="Submit" on-click="editBooking" raised>Submit</paper-button>
                 </form>
               </paper-material>
-
             </section>
+            
             <section data-route="booking-info">
-              <firebase-document location="{{bookingurl}}" log="false" data="{{booking}}"></firebase-document>
+              <firebase-document location="{{bookingurl}}" data="{{booking}}"></firebase-document>
               <paper-material elevation="1" class="paper-font-body2">
               <template is="dom-if" if="{{!booking}}">
                 <div>Sorry, could not find your booking.</div>
@@ -259,11 +263,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
             </section>
             </template>
+
             <template id="adminSection" is="dom-if" if="{{isAdminRoute(route)}}">
             <section data-route="admin/bookings">
-              <script type="text/javascript">
-                app.$.firebaseLogin.login(app.$.firebaseLogin.params);
-              </script>
               <firebase-collection order-by-child="date" location="{{bookingsUrl}}" data={{bookings}}></firebase-collection>
               <template is="dom-repeat" items="{{bookings}}" as="booking">
                 <paper-material elevation="1" class="paper-font-body2" >
@@ -326,8 +328,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  duration="4000"
                  text="There was an error authenticating.  Please try again">
     </paper-toast>
-
-    <firebase-auth id="firebaseLogin" user="{{user}}" provider="custom" location="{{bookingsUrl}}" params="{{params}}" on-error="authErrorHandler"></firebase-auth>
 
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
     <!--

@@ -1,0 +1,31 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-login-form">
+	<template>
+		<form is="iron-form" id="loginForm" method="post">
+		<paper-input name="username" label="Username" value="{{username}}"></paper-input>
+		<paper-input name="password" label="Password" type="password" value="{{password}}"></paper-input>
+		<paper-button raised on-click="submitLogin">Login</paper-button>
+		</form>		
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'my-login-form',	
+		properties: {
+			username: {
+				type: String,
+			},
+			password: {
+				type: String
+			}
+		},
+		submitLogin: function(e) {
+			console.log('submitting log in request');
+			console.log('username: ' + this.username);
+			console.log('password: ' + this.password);
+			app.login(this.username, this.password);
+		}
+	});
+</script>
