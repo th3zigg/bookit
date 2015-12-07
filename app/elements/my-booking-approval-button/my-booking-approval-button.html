@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-booking-approval-button">
+	<template>
+		<paper-icon-button src="[[src]]" icon="[[icon]]"></paper-icon-button>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'my-booking-approval-button',
+	    listeners: {
+	    	'tap': 'updateApproval'
+	    },		
+		properties: {
+			src: {
+				type: String
+			},
+			icon: {
+				type: String
+			},
+			approved: {
+				type: Boolean,
+				notify: true
+			}
+		},
+		updateApproval: function() {
+			this.approved = !this.approved;
+		}
+	});
+</script>
