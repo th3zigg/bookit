@@ -1,11 +1,3 @@
-/*
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
 
 (function(document) {
   'use strict';
@@ -14,7 +6,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
-  app.headline='This is only a placeholder';
+  app.headline ='This is only a placeholder';
   app.firebaseurl = 'https://pwsbooking.firebaseio.com';
   var dbref = new Firebase(app.firebaseurl);
   //app.locations = [];
@@ -31,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Number(moment().add(7, 'd').format(app.dateDigitFormat))
   ];
   app.times = ['7AM - 9AM','9AM - 1PM','3PM - 5PM','5PM - 7PM'];
-  dbref.child('locations').on('value', function(snapshot){
+  dbref.child('locations').on('value', function(snapshot) {
     app.locations = snapshot.val();
   });
 
@@ -60,23 +52,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }, function(error, authData) {
       if (error) {
         console.log(error);
-        app.showBookingToastMessage('There was a problem with login. Please try again');
+        app.showBookingToastMessage(
+          'There was a problem with login. Please try again');
       } else {        
         page('/');
       }
     }, {
-      remember: "sessionOnly"
+      remember: 'sessionOnly'
     });
   };
 
   app.isUserLoggedin = function() {
-    console.log('checking if user is logged in');
     var userSession = sessionStorage.getItem('firebase:session::pwsbooking');
     if (userSession) {
       try {
         var authData = JSON.parse(userSession);
         if (authData && authData.token) {
-          console.log('looks like user is logged in');
           return true;
         }
       } catch (e) {
@@ -85,20 +76,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     
     return false;
-  };
-
-  app.getUserTokenFromSession = function() {
-    var userSession = sessionStorage.getItem('firebase:session::pwsbooking');
-    if (userSession) {
-      try {
-        var authData = JSON.parse(userSession);
-        if (authData && authData.token) {
-          return authData.token;
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }    
   };
 
   app.addBooking = function() {
@@ -114,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       dateAdded: Date.now()
     };
 
-    var fqn_bookingid = dbref.child('bookings').push(booking, function(error) {
+    var fqnBookingid = dbref.child('bookings').push(booking, function(error) {
         if (error) {
           console.error('there was an error');
           console.log(error);
@@ -122,17 +99,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else {
           //console.log('your data was saved with id: ' + fqn_bookingid);
           app.showBookingToastMessage('Your booking has been submitted.');
-          var bookingid = fqn_bookingid.toString().substring((app.firebaseurl+'/bookings/').length);
+          var bookingid = fqnBookingid.toString().substring((app.firebaseurl+'/bookings/').length);
           page('/booking-info/'+bookingid);
           app.scrollPageToTop();
         }
     });
   };
 
-  app.editBooking = function(input) {
+  app.editBooking = function() {
     var bookingid = document.querySelector('#bookingid_edit') ? document.querySelector('#bookingid_edit').value : '';
     if (!bookingid) {
-      console.log('no booking id found');
       app.showBookingToastMessage('There was a problem retrieving your booking.  Please try again.');
       return;
     }
@@ -182,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.isBookingEditableOrCancellable = function(booking) {
     var now = moment();
     try {
-      var startTime = booking.time.split(" - ")[0];
+      var startTime = booking.time.split(' - ')[0];
       var bookingDateNum = Number(booking.date+'0000') + Number(moment(startTime, 'ha').format('HHmm'));
       //console.log('booking date: ' + bookingDateNum);
       var threeHrsFromNowNum = Number(now.add(3, 'h').format('YYYYMMDDHHmm'));
@@ -249,7 +225,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   app.isAdminRoute = function(route) {
-    return route ? route.search('^admin') != -1 : false;
+    return route ? route.search('^admin') !== -1 : false;
   };
 
   // See https://github.com/Polymer/polymer/issues/1381

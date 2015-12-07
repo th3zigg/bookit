@@ -56,37 +56,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!-- Add your elements here -->
 <link rel="import" href="../styles/app-theme.html">
+<link rel="import" href="my-booking-approval-button/my-booking-approval-button.html">
 <link rel="import" href="my-delete-booking-button/my-delete-booking-button.html">
 <link rel="import" href="my-login-form/my-login-form.html">
-<!-- <link rel="import" href="../styles/shared-styles.html">
-<link rel="import" href="my-greeting/my-greeting.html">
-<link rel="import" href="my-list/my-list.html"> -->
-
-<dom-module id="booking-approval-button">
-	<template>
-		<paper-icon-button src="[[src]]" icon="[[icon]]"></paper-icon-button>
-	</template>
-</dom-module>
-<script>
-	Polymer({
-		is: 'booking-approval-button',
-	    listeners: {
-	    	'tap': 'updateApproval'
-	    },		
-		properties: {
-			src: {
-				type: String
-			},
-			icon: {
-				type: String
-			},
-			approved: {
-				type: Boolean,
-				notify: true
-			}
-		},
-		updateApproval: function(e) {
-			this.approved = !this.approved;
-		}
-	});
-</script>
