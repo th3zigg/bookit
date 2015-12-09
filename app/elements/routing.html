@@ -18,9 +18,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page(function(ctx, next) {
       // check user is authenticated
       // if not redirect to login
-      console.log(ctx);
+      //console.log(ctx);
       if (!app.isUserLoggedin() && ctx.path !== '/login') {
-        console.log('you are not logged in');
+        //console.log('you are not logged in');
         //app.route = 'login';
         page.redirect('/login');
       } else {

@@ -49,7 +49,7 @@
     dbref.authWithPassword({
       email: username,
       password: password
-    }, function(error, authData) {
+    }, function(error) {
       if (error) {
         console.log(error);
         app.showBookingToastMessage(
