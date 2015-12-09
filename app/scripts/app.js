@@ -6,7 +6,7 @@
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
-  app.headline ='This is only a placeholder';
+  app.headline ='PWS Booking (Beta)';
   app.firebaseurl = 'https://pwsbooking.firebaseio.com';
   var dbref = new Firebase(app.firebaseurl);
   //app.locations = [];
