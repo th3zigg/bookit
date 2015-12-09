@@ -11,39 +11,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="../bower_components/page/page.js"></script>
 <script>
   window.addEventListener('WebComponentsReady', function() {
-
-    // We use Page.js for routing. This is a Micro
-    // client-side router inspired by the Express router
-    // More info: https://visionmedia.github.io/page.js/
     page(function(ctx, next) {
-      // check user is authenticated
-      // if not redirect to login
-      //console.log(ctx);
       if (!app.isUserLoggedin() && ctx.path !== '/login') {
-        //console.log('you are not logged in');
-        //app.route = 'login';
         page.redirect('/login');
       } else {
         next();
       }
     });
 
-    page('/', function () {
+    page('/', function() {
       app.route = 'home';
       app.scrollPageToTop();
     });
 
-     page('/login', function () {
+     page('/login', function() {
        app.route = 'login';
        app.scrollPageToTop();
      });
 
-     page('/book', function () {
+     page('/book', function() {
        app.route = 'book';
        app.scrollPageToTop();
      });
 
-     page('/booking-info/:bookingid', function (data) {
+     page('/booking-info/:bookingid', function(data) {
        app.route = 'booking-info';
        app.params = data.params;
        app.bookingurl = app.firebaseurl + '/bookings/' + data.params.bookingid;
@@ -62,11 +53,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'admin/bookings';
       app.bookingsUrl = app.firebaseurl + '/bookings';
     });
-    //
-    // page('/contact', function () {
-    //   app.route = 'contact';
-    //   app.scrollPageToTop();
-    // });
 
     // add #! before urls
     page({
