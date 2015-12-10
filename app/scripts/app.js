@@ -78,6 +78,11 @@
     return false;
   };
 
+  app.signout = function() {
+    dbref.unauth();
+    page('/');
+  }
+
   app.addBooking = function() {
     console.log('thanks for your submission');
     //console.log(this.$.date);
