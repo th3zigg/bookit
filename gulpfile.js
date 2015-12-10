@@ -121,7 +121,7 @@ gulp.task('lint', function() {
   // JSCS has not yet a extract option
   .pipe($.if('*.html', $.htmlExtract()))
   .pipe($.jshint())
-  .pipe($.jscs())
+  //.pipe($.jscs())
   .pipe($.jscsStylish.combineWithHintResults())
   .pipe($.jshint.reporter('jshint-stylish'))
   .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
