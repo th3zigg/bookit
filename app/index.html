@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="utf-8">
-  <base href="/">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="PWS Booking" />
@@ -75,10 +74,10 @@
             <span>Book a shift</span>
           </a>
 
-          <!-- <a data-route="booking-info" href="/booking-info/-K-JfSmo85KlDB9q2vMe" on-click="onDataRouteClick">
+          <a data-route="booking-info" href="/booking-info/-K-JfSmo85KlDB9q2vMe" on-click="onDataRouteClick">
             <iron-icon icon="search"></iron-icon>
             <span>Search</span>
-          </a> -->
+          </a>
 
           <a data-route="admin/bookings" href="/admin/bookings" on-click="onDataRouteClick">
             <iron-icon icon="assignment-ind"></iron-icon>
@@ -105,9 +104,9 @@
           </div>
 
           <!-- Application sub title -->
-          <!-- <div class="bottom bottom-container center horizontal layout">
+          <div class="bottom bottom-container center horizontal layout">
             <div class="bottom-title paper-font-subhead">Strapline</div>
-          </div> -->
+          </div>
 
         </paper-toolbar>
 
@@ -125,13 +124,13 @@
             <template id="userSection" is="dom-if" if="{{!isAdminRoute(route)}}">
             <section data-route="home">
               <paper-material elevation="1">
-                <a data-route="book" href="/book" on-click="onDataRouteClick" style="text-decoration: none;"><iron-icon icon="add"></iron-icon>Add a booking</a>
+                <paper-button><iron-icon icon="add"><a data-route="book" href="/book" on-click="onDataRouteClick"></iron-icon>Add a booking</paper-button>
               </paper-material>
 
               <paper-material elevation="1" class="paper-font-body2">
                 <form is="iron-form" id="searchform" method="get" action="#" onsubmit="submitSearch(this.bookingid.value)">
                   <paper-input label="Find a booking" type="search"
-                    placeholder="Enter your booking code" name="bookingid">
+                    placeholder="Enter your booking code" name="bookingid" autosave="test" results="5">
                     <div prefix><iron-icon icon="search" item-icon></iron-icon></div>
                   </paper-input>
                 </form>
@@ -311,17 +310,17 @@
     </paper-drawer-panel>
 
     <paper-toast id="booking-toast"
-                 duration="6000"
+                 duration="3000"
                  text="">
     </paper-toast>
 
     <paper-toast id="booking-not-saved"
-                 duration="4000"
+                 duration="3000"
                  text="There was an error submitting your booking. Please try again.">
     </paper-toast>
 
     <paper-toast id="auth-error"
-                 duration="4000"
+                 duration="3000"
                  text="There was an error authenticating.  Please try again">
     </paper-toast>
 
@@ -357,3 +356,4 @@
 </body>
 
 </html>
+              
