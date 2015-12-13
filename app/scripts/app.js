@@ -52,8 +52,7 @@
     }, function(error) {
       if (error) {
         console.log(error);
-        app.showBookingToastMessage(
-          'There was a problem with login. Please try again');
+        app.showBookingToastMessage(error);
       } else {        
         page('/');
       }
